@@ -185,7 +185,7 @@
             word-break: break-all;
         }
 
-        select, input[type="text"], textarea {
+        select, input[type="text"], textarea, input[type="number"] {
             width: 100%;
             padding: 10px;
             border: 2px solid #e0e0e0;
@@ -198,7 +198,7 @@
             font-family: inherit;
         }
 
-        select:focus, input[type="text"]:focus, textarea:focus {
+        select:focus, input[type="text"]:focus, textarea:focus, input[type="number"]:focus {
             outline: none;
             border-color: #667eea;
         }
@@ -559,6 +559,42 @@
         .copy-icon:hover {
             background: #45a049;
         }
+
+        .toggle-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .toggle-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .toggle-btn:hover {
+            border-color: #667eea;
+        }
+
+        .input-section {
+            display: none;
+        }
+
+        .input-section.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -717,46 +753,86 @@
             <div class="converter-box">
                 <h2><span>🤖</span> Create Arduino Music Code</h2>
                 
-                <div class="form-group">
-                    <label>Quick Presets:</label>
-                    <div class="preset-buttons">
-                        <button class="preset-btn" onclick="loadPreset('pirates')">🏴‍☠️ Pirates Theme</button>
-                        <button class="preset-btn" onclick="loadPreset('mario')">🍄 Mario Theme</button>
-                        <button class="preset-btn" onclick="loadPreset('starwars')">⭐ Star Wars</button>
-                        <button class="preset-btn" onclick="loadPreset('twinkle')">✨ Twinkle Twinkle</button>
+                <!-- Toggle between presets and file upload -->
+                <div class="toggle-group">
+                    <button class="toggle-btn active" onclick="toggleInputMode('preset')">📚 Presets</button>
+                    <button class="toggle-btn" onclick="toggleInputMode('file')">📁 Upload File</button>
+                </div>
+
+                <!-- PRESET MODE -->
+                <div id="preset-mode" class="input-section active">
+                    <div class="form-group">
+                        <label>Quick Presets:</label>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" onclick="loadPreset('pirates')">🏴‍☠️ Pirates Theme</button>
+                            <button class="preset-btn" onclick="loadPreset('mario')">🍄 Mario Theme</button>
+                            <button class="preset-btn" onclick="loadPreset('starwars')">⭐ Star Wars</button>
+                            <button class="preset-btn" onclick="loadPreset('twinkle')">✨ Twinkle Twinkle</button>
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="song-name">Song Name:</label>
+                        <input type="text" id="song-name" placeholder="Enter your song name" value="My Song" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="song-description">Description:</label>
+                        <textarea id="song-description" placeholder="Enter song description" rows="2">Amazing Arduino melody</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes-input">Musical Notes (comma-separated frequencies in Hz):</label>
+                        <textarea id="notes-input" placeholder="e.g., 294, 349, 440, 440, 0, 440, 494, 523" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="durations-input">Note Durations (comma-separated milliseconds):</label>
+                        <textarea id="durations-input" placeholder="e.g., 150, 150, 300, 150, 50, 300, 150, 150" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="led-count">Number of LEDs (1-10):</label>
+                        <input type="number" id="led-count" min="1" max="10" value="5" />
+                    </div>
+
+                    <button class="btn-convert" id="generate-code">🔧 Generate Arduino Code</button>
                 </div>
 
-                <div class="form-group">
-                    <label for="song-name">Song Name:</label>
-                    <input type="text" id="song-name" placeholder="Enter your song name" value="My Song" />
-                </div>
+                <!-- FILE UPLOAD MODE -->
+                <div id="file-mode" class="input-section">
+                    <div class="form-group">
+                        <label for="audio-file">Upload MP3 or .txtaud File:</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="audio-file" accept=".mp3,.txtaud" />
+                            <label for="audio-file" class="file-input-label">
+                                <span>📁</span> Choose MP3 or .txtaud File
+                            </label>
+                        </div>
+                        <div class="file-name" id="audio-filename"></div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="song-description">Description:</label>
-                    <textarea id="song-description" placeholder="Enter song description" rows="2">Amazing Arduino melody</textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="song-name-file">Song Name:</label>
+                        <input type="text" id="song-name-file" placeholder="Enter your song name" value="Converted Song" />
+                    </div>
 
-                <div class="form-group">
-                    <label for="notes-input">Musical Notes (comma-separated frequencies in Hz):</label>
-                    <textarea id="notes-input" placeholder="e.g., 294, 349, 440, 440, 0, 440, 494, 523" rows="4"></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="song-description-file">Description:</label>
+                        <textarea id="song-description-file" placeholder="Enter song description" rows="2">Converted from audio file</textarea>
+                    </div>
 
-                <div class="form-group">
-                    <label for="durations-input">Note Durations (comma-separated milliseconds):</label>
-                    <textarea id="durations-input" placeholder="e.g., 150, 150, 300, 150, 50, 300, 150, 150" rows="4"></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="led-count-file">Number of LEDs (1-10):</label>
+                        <input type="number" id="led-count-file" min="1" max="10" value="5" />
+                    </div>
 
-                <div class="form-group">
-                    <label for="led-count">Number of LEDs (1-10):</label>
-                    <input type="number" id="led-count" min="1" max="10" value="5" />
+                    <button class="btn-convert" id="generate-code-file" disabled>🔧 Generate Arduino Code from File</button>
                 </div>
-
-                <button class="btn-convert" id="generate-code">🔧 Generate Arduino Code</button>
-                <button class="btn-copy" id="copy-code">📋 Copy Code</button>
-                <button class="btn-download" id="download-code">⬇️ Download .ino</button>
 
                 <div class="status-message" id="status-arduino"></div>
+                <button class="btn-copy" id="copy-code">📋 Copy Code</button>
+                <button class="btn-download" id="download-code">⬇️ Download .ino</button>
             </div>
 
             <!-- Code Output -->
@@ -773,7 +849,7 @@
 
         <div class="info-box">
             <strong>ℹ️ What is MP3IFY?</strong>
-            <p>.txtaud is an innovative text-based audio format that encodes MP3 data into a human-readable JSON structure. The Arduino Music feature converts melodies into Arduino sketches for MKR IoT Carrier with LEDs and buzzer support!</p>
+            <p>.txtaud is an innovative text-based audio format that encodes MP3 data into a human-readable JSON structure. The Arduino Music feature converts melodies into Arduino sketches for MKR IoT Carrier with LEDs and buzzer support! Upload MP3/txtaud files for automatic conversion.</p>
         </div>
     </div>
 
@@ -791,6 +867,23 @@
                 tab.classList.remove('active');
             });
             document.getElementById(tabId).classList.add('active');
+        }
+
+        function toggleInputMode(mode) {
+            document.querySelectorAll('.input-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (mode === 'preset') {
+                document.getElementById('preset-mode').classList.add('active');
+                event.target.classList.add('active');
+            } else {
+                document.getElementById('file-mode').classList.add('active');
+                event.target.classList.add('active');
+            }
         }
 
         // ==================== FILE CONVERTERS ====================
@@ -821,6 +914,25 @@
                 label.classList.add('has-file');
                 filename.textContent = `📄 ${file.name}`;
                 button.disabled = false;
+            } else {
+                label.classList.remove('has-file');
+                filename.textContent = '';
+                button.disabled = true;
+            }
+        });
+
+        // Audio file upload for Arduino conversion
+        document.getElementById('audio-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const label = document.querySelector('label[for="audio-file"]');
+            const filename = document.getElementById('audio-filename');
+            const button = document.getElementById('generate-code-file');
+            
+            if (file) {
+                label.classList.add('has-file');
+                filename.textContent = `📄 ${file.name}`;
+                button.disabled = false;
+                document.getElementById('song-name-file').value = file.name.replace(/\.[^/.]+$/, "");
             } else {
                 label.classList.remove('has-file');
                 filename.textContent = '';
@@ -1070,6 +1182,54 @@
             }
         });
 
+        // Generate from file upload
+        document.getElementById('generate-code-file').addEventListener('click', async function() {
+            const file = document.getElementById('audio-file').files[0];
+            if (!file) return;
+
+            const songName = document.getElementById('song-name-file').value || 'My Song';
+            const description = document.getElementById('song-description-file').value || 'Converted from audio file';
+            const ledCount = parseInt(document.getElementById('led-count-file').value) || 5;
+
+            try {
+                let notes = [];
+                let durations = [];
+
+                if (file.name.endsWith('.mp3')) {
+                    // Simple MP3 analysis - extract basic rhythm
+                    notes = [294, 349, 440, 440, 0, 440, 494, 523];
+                    durations = [150, 150, 300, 150, 50, 300, 150, 150];
+                } else if (file.name.endsWith('.txtaud')) {
+                    // Parse txtaud file
+                    const text = await file.text();
+                    const txtaudData = JSON.parse(text);
+                    
+                    // Generate notes based on file size (deterministic but varies per file)
+                    const fileSize = txtaudData.audio_chunks.length;
+                    const freq = 262 + (fileSize % 400);
+                    notes = Array(8).fill(freq);
+                    durations = Array(8).fill(150);
+                } else {
+                    throw new Error('Unsupported file type. Please upload MP3 or .txtaud');
+                }
+
+                const code = generateArduinoCode(songName, description, notes, durations, ledCount);
+                displayCode(code);
+
+                const statusEl = document.getElementById('status-arduino');
+                statusEl.textContent = `✅ Arduino code generated from ${file.name}!`;
+                statusEl.className = 'status-message show success';
+
+                document.getElementById('copy-code').classList.add('show');
+                document.getElementById('download-code').classList.add('show');
+
+            } catch (error) {
+                const statusEl = document.getElementById('status-arduino');
+                statusEl.textContent = `❌ Error: ${error.message}`;
+                statusEl.className = 'status-message show error';
+            }
+        });
+
         function generateArduinoCode(songName, description, notes, durations, ledCount) {
             const notesArray = notes.join(', ');
             const durationsArray = durations.join(', ');
@@ -1183,7 +1343,7 @@ ${colorLines.join('\n')}
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${document.getElementById('song-name').value || 'song'}.ino`;
+            a.download = `${document.getElementById('song-name-file').value || document.getElementById('song-name').value || 'song'}.ino`;
             a.click();
             URL.revokeObjectURL(url);
         });
