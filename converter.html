@@ -25,9 +25,11 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             padding: 40px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .header {
@@ -49,6 +51,43 @@
         .music-icon {
             font-size: 3em;
             margin-bottom: 15px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+
+        .nav-tabs button {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .nav-tabs button:hover {
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .converter-section {
@@ -146,7 +185,7 @@
             word-break: break-all;
         }
 
-        select {
+        select, input[type="text"], textarea {
             width: 100%;
             padding: 10px;
             border: 2px solid #e0e0e0;
@@ -156,9 +195,10 @@
             background: white;
             cursor: pointer;
             transition: border-color 0.3s ease;
+            font-family: inherit;
         }
 
-        select:focus {
+        select:focus, input[type="text"]:focus, textarea:focus {
             outline: none;
             border-color: #667eea;
         }
@@ -216,6 +256,21 @@
         }
 
         .btn-download.show {
+            display: block;
+        }
+
+        .btn-copy {
+            background: #2196f3;
+            color: white;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .btn-copy:hover {
+            background: #0b7dda;
+        }
+
+        .btn-copy.show {
             display: block;
         }
 
@@ -414,99 +469,95 @@
             background: #764ba2;
         }
 
-        .tab-content {
+        .tab-content-inner {
             display: none;
         }
 
-        .tab-content.active {
+        .tab-content-inner.active {
             display: block;
         }
 
-        .three-column-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 30px;
-            margin-top: 40px;
-            margin-bottom: 30px;
+        .arduino-editor {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
-        @media (max-width: 1200px) {
-            .three-column-section {
-                grid-template-columns: 1fr 1fr;
-            }
+        .arduino-editor .comment {
+            color: #6a9955;
+        }
+
+        .arduino-editor .keyword {
+            color: #569cd6;
+        }
+
+        .arduino-editor .string {
+            color: #ce9178;
+        }
+
+        .arduino-editor .number {
+            color: #b5cea8;
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         @media (max-width: 768px) {
-            .three-column-section {
+            .preset-buttons {
                 grid-template-columns: 1fr;
             }
         }
 
-        .arduino-box {
-            border: 2px solid #ff9800;
-            border-radius: 15px;
-            padding: 25px;
-            background: #fff8f0;
+        .preset-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
 
-        .arduino-box:hover {
-            border-color: #ff5722;
-            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.2);
-        }
-
-        .arduino-box h2 {
-            color: #ff9800;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-arduino {
-            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
-            color: white;
-            display: none;
-            margin-top: 15px;
-        }
-
-        .btn-arduino:hover {
+        .preset-btn:hover {
+            background: #764ba2;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 152, 0, 0.3);
         }
 
-        .btn-arduino.show {
-            display: block;
+        .code-container {
+            position: relative;
         }
 
-        .arduino-code-preview {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.75em;
-            max-height: 250px;
-            overflow-y: auto;
-            margin-top: 15px;
-            line-height: 1.4;
+        .copy-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4caf50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            border: none;
+            transition: all 0.3s ease;
+            z-index: 10;
         }
 
-        .arduino-code-preview .comment {
-            color: #75715e;
-        }
-
-        .arduino-code-preview .keyword {
-            color: #66d9ef;
-        }
-
-        .arduino-code-preview .function {
-            color: #a1efe4;
-        }
-
-        .arduino-code-preview .number {
-            color: #ae81ff;
+        .copy-icon:hover {
+            background: #45a049;
         }
     </style>
 </head>
@@ -515,276 +566,248 @@
         <div class="header">
             <div class="music-icon">🎵</div>
             <h1>MP3IFY</h1>
-            <p>Transform MP3 to .txtaud, play it back, and convert to Arduino code!</p>
+            <p>Transform MP3 to .txtaud and create Arduino Music!</p>
         </div>
 
-        <div class="converter-section">
-            <!-- MP3 to TXTAUD Converter -->
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('converter')">🔄 Converter</button>
+            <button class="tab-btn" onclick="switchTab('arduino')">🤖 Arduino Music</button>
+        </div>
+
+        <!-- CONVERTER TAB -->
+        <div id="converter" class="tab-content active">
+            <div class="converter-section">
+                <!-- MP3 to TXTAUD Converter -->
+                <div class="converter-box">
+                    <h2><span>🎵</span> MP3 → .txtaud <span class="arrow">→</span></h2>
+                    
+                    <div class="form-group">
+                        <label for="mp3-file">Select MP3 File:</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="mp3-file" accept=".mp3" />
+                            <label for="mp3-file" class="file-input-label">
+                                <span>📁</span> Choose MP3 File
+                            </label>
+                        </div>
+                        <div class="file-name" id="mp3-filename"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quality">Quality:</label>
+                        <select id="quality">
+                            <option value="high">High (Best Quality)</option>
+                            <option value="medium">Medium (Balanced)</option>
+                            <option value="low">Low (Smaller Size)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="compress" />
+                        <label for="compress" style="margin-bottom: 0;">Enable Compression</label>
+                    </div>
+
+                    <button class="btn-convert" id="convert-to-txtaud" disabled>Convert to .txtaud</button>
+                    <button class="btn-download" id="download-txtaud">⬇️ Download .txtaud</button>
+
+                    <div class="loading" id="loading-mp3">
+                        <div class="spinner"></div>
+                        <p>Converting...</p>
+                    </div>
+
+                    <div class="status-message" id="status-mp3"></div>
+
+                    <div class="stats" id="stats-mp3" style="display: none;">
+                        <div class="stat-item">
+                            <div class="stat-label">Original Size</div>
+                            <div class="stat-value" id="original-size">-</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Converted Size</div>
+                            <div class="stat-value" id="converted-size">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TXTAUD to MP3 Converter -->
+                <div class="converter-box">
+                    <h2><span>📄</span> .txtaud → 🎵 <span class="arrow">→</span></h2>
+                    
+                    <div class="form-group">
+                        <label for="txtaud-file">Select .txtaud File:</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="txtaud-file" accept=".txtaud" />
+                            <label for="txtaud-file" class="file-input-label">
+                                <span>📁</span> Choose .txtaud File
+                            </label>
+                        </div>
+                        <div class="file-name" id="txtaud-filename"></div>
+                    </div>
+
+                    <div style="height: 60px; display: flex; align-items: flex-end;">
+                        <button class="btn-convert" id="convert-to-mp3" disabled>Convert to MP3</button>
+                    </div>
+                    <button class="btn-download" id="download-mp3">⬇️ Download MP3</button>
+
+                    <div class="loading" id="loading-txtaud">
+                        <div class="spinner"></div>
+                        <p>Converting...</p>
+                    </div>
+
+                    <div class="status-message" id="status-txtaud"></div>
+
+                    <div class="stats" id="stats-txtaud" style="display: none;">
+                        <div class="stat-item">
+                            <div class="stat-label">Txtaud Size</div>
+                            <div class="stat-value" id="txtaud-size">-</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Output Size</div>
+                            <div class="stat-value" id="output-mp3-size">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section">
+                <h3>📋 Preview & Player</h3>
+                <div class="tab-buttons">
+                    <button onclick="showInnerTab('preview-tab')">📄 Preview</button>
+                    <button onclick="showInnerTab('player-tab')">🎧 Player</button>
+                </div>
+
+                <!-- Preview Tab -->
+                <div id="preview-tab" class="tab-content-inner active">
+                    <div style="margin-bottom: 15px;">
+                        <button onclick="showPreview('mp3-preview')" style="background: #667eea; color: white; padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer; margin-right: 10px;">MP3 → .txtaud Preview</button>
+                        <button onclick="showPreview('txtaud-preview')" style="background: #667eea; color: white; padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer;">Metadata Preview</button>
+                    </div>
+                    <div class="preview-box" id="mp3-preview">
+                        <p style="color: #999;">Convert an MP3 file to see the .txtaud preview here</p>
+                    </div>
+                    <div class="preview-box" id="txtaud-preview" style="display: none;">
+                        <p style="color: #999;">Upload a .txtaud file to see metadata here</p>
+                    </div>
+                </div>
+
+                <!-- Player Tab -->
+                <div id="player-tab" class="tab-content-inner">
+                    <div class="player-container" id="player-container">
+                        <h4>🎧 Music Player</h4>
+                        <div class="audio-player">
+                            <audio id="audio-player" controls>
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        <div class="player-info" id="player-info">
+                            <strong>Now Playing:</strong>
+                            <span id="now-playing">No file loaded</span>
+                        </div>
+                    </div>
+                    <p style="color: #999; text-align: center; margin-top: 30px;" id="player-placeholder">
+                        Convert a .txtaud file to MP3 to see the player here
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ARDUINO TAB -->
+        <div id="arduino" class="tab-content">
             <div class="converter-box">
-                <h2><span>🎵</span> MP3 → .txtaud <span class="arrow">→</span></h2>
+                <h2><span>🤖</span> Create Arduino Music Code</h2>
                 
                 <div class="form-group">
-                    <label for="mp3-file">Select MP3 File:</label>
-                    <div class="file-input-wrapper">
-                        <input type="file" id="mp3-file" accept=".mp3" />
-                        <label for="mp3-file" class="file-input-label">
-                            <span>📁</span> Choose MP3 File
-                        </label>
+                    <label>Quick Presets:</label>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" onclick="loadPreset('pirates')">🏴‍☠️ Pirates Theme</button>
+                        <button class="preset-btn" onclick="loadPreset('mario')">🍄 Mario Theme</button>
+                        <button class="preset-btn" onclick="loadPreset('starwars')">⭐ Star Wars</button>
+                        <button class="preset-btn" onclick="loadPreset('twinkle')">✨ Twinkle Twinkle</button>
                     </div>
-                    <div class="file-name" id="mp3-filename"></div>
                 </div>
 
                 <div class="form-group">
-                    <label for="quality">Quality:</label>
-                    <select id="quality">
-                        <option value="high">High (Best Quality)</option>
-                        <option value="medium">Medium (Balanced)</option>
-                        <option value="low">Low (Smaller Size)</option>
-                    </select>
+                    <label for="song-name">Song Name:</label>
+                    <input type="text" id="song-name" placeholder="Enter your song name" value="My Song" />
                 </div>
 
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="compress" />
-                    <label for="compress" style="margin-bottom: 0;">Enable Compression</label>
-                </div>
-
-                <button class="btn-convert" id="convert-to-txtaud" disabled>Convert to .txtaud</button>
-                <button class="btn-download" id="download-txtaud">⬇️ Download .txtaud</button>
-
-                <div class="loading" id="loading-mp3">
-                    <div class="spinner"></div>
-                    <p>Converting...</p>
-                </div>
-
-                <div class="status-message" id="status-mp3"></div>
-
-                <div class="stats" id="stats-mp3" style="display: none;">
-                    <div class="stat-item">
-                        <div class="stat-label">Original Size</div>
-                        <div class="stat-value" id="original-size">-</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Converted Size</div>
-                        <div class="stat-value" id="converted-size">-</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TXTAUD to MP3 Converter -->
-            <div class="converter-box">
-                <h2><span>📄</span> .txtaud → 🎵 <span class="arrow">→</span></h2>
-                
                 <div class="form-group">
-                    <label for="txtaud-file">Select .txtaud File:</label>
-                    <div class="file-input-wrapper">
-                        <input type="file" id="txtaud-file" accept=".txtaud" />
-                        <label for="txtaud-file" class="file-input-label">
-                            <span>📁</span> Choose .txtaud File
-                        </label>
-                    </div>
-                    <div class="file-name" id="txtaud-filename"></div>
+                    <label for="song-description">Description:</label>
+                    <textarea id="song-description" placeholder="Enter song description" rows="2">Amazing Arduino melody</textarea>
                 </div>
 
-                <div style="height: 60px; display: flex; align-items: flex-end;">
-                    <button class="btn-convert" id="convert-to-mp3" disabled>Convert to MP3</button>
-                </div>
-                <button class="btn-download" id="download-mp3">⬇️ Download MP3</button>
-
-                <div class="loading" id="loading-txtaud">
-                    <div class="spinner"></div>
-                    <p>Converting...</p>
-                </div>
-
-                <div class="status-message" id="status-txtaud"></div>
-
-                <div class="stats" id="stats-txtaud" style="display: none;">
-                    <div class="stat-item">
-                        <div class="stat-label">Txtaud Size</div>
-                        <div class="stat-value" id="txtaud-size">-</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Output Size</div>
-                        <div class="stat-value" id="output-mp3-size">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Arduino Converter Section -->
-        <div class="three-column-section">
-            <!-- MP3 to Arduino -->
-            <div class="arduino-box">
-                <h2><span>🎵</span> MP3 → Arduino <span class="arrow">→</span></h2>
-                <p style="color: #666; font-size: 0.9em; margin-bottom: 15px;">Convert MP3 to Arduino MKRIoTCarrier code with LED effects</p>
-                
                 <div class="form-group">
-                    <label for="tempo-control">Tempo (BPM):</label>
-                    <select id="tempo-control">
-                        <option value="normal">Normal (100 BPM)</option>
-                        <option value="fast">Fast (140 BPM)</option>
-                        <option value="slow">Slow (60 BPM)</option>
-                    </select>
+                    <label for="notes-input">Musical Notes (comma-separated frequencies in Hz):</label>
+                    <textarea id="notes-input" placeholder="e.g., 294, 349, 440, 440, 0, 440, 494, 523" rows="4"></textarea>
                 </div>
 
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="led-effects" checked />
-                    <label for="led-effects" style="margin-bottom: 0;">Include LED Effects</label>
-                </div>
-
-                <button class="btn-convert" id="convert-to-arduino-mp3" disabled>Generate Arduino Code</button>
-                <button class="btn-arduino show" id="download-arduino-mp3">⬇️ Download .ino</button>
-
-                <div class="loading" id="loading-arduino-mp3">
-                    <div class="spinner"></div>
-                    <p>Generating...</p>
-                </div>
-
-                <div class="status-message" id="status-arduino-mp3"></div>
-
-                <div class="arduino-code-preview" id="arduino-preview-mp3" style="display: none;"></div>
-            </div>
-
-            <!-- TXTAUD to Arduino -->
-            <div class="arduino-box">
-                <h2><span>📄</span> .txtaud → Arduino <span class="arrow">→</span></h2>
-                <p style="color: #666; font-size: 0.9em; margin-bottom: 15px;">Convert .txtaud to Arduino sketches with synth sounds</p>
-                
                 <div class="form-group">
-                    <label for="synth-type">Synth Type:</label>
-                    <select id="synth-type">
-                        <option value="square">Square Wave</option>
-                        <option value="sine">Sine (Piano-like)</option>
-                        <option value="polka">Polka Remix</option>
-                    </select>
+                    <label for="durations-input">Note Durations (comma-separated milliseconds):</label>
+                    <textarea id="durations-input" placeholder="e.g., 150, 150, 300, 150, 50, 300, 150, 150" rows="4"></textarea>
                 </div>
 
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="strobe-effects" checked />
-                    <label for="strobe-effects" style="margin-bottom: 0;">Strobe LED Effects</label>
-                </div>
-
-                <button class="btn-convert" id="convert-to-arduino-txtaud" disabled>Generate Arduino Code</button>
-                <button class="btn-arduino show" id="download-arduino-txtaud">⬇️ Download .ino</button>
-
-                <div class="loading" id="loading-arduino-txtaud">
-                    <div class="spinner"></div>
-                    <p>Generating...</p>
-                </div>
-
-                <div class="status-message" id="status-arduino-txtaud"></div>
-
-                <div class="arduino-code-preview" id="arduino-preview-txtaud" style="display: none;"></div>
-            </div>
-
-            <!-- Arduino to MP3 Player -->
-            <div class="arduino-box">
-                <h2><span>⚙️</span> Arduino Playback <span class="arrow">→</span></h2>
-                <p style="color: #666; font-size: 0.9em; margin-bottom: 15px;">Play Arduino sketches as audio on your computer</p>
-                
                 <div class="form-group">
-                    <label for="arduino-file">Select .ino File:</label>
-                    <div class="file-input-wrapper">
-                        <input type="file" id="arduino-file" accept=".ino,.cpp,.c" />
-                        <label for="arduino-file" class="file-input-label">
-                            <span>📁</span> Choose .ino File
-                        </label>
-                    </div>
-                    <div class="file-name" id="arduino-filename"></div>
+                    <label for="led-count">Number of LEDs (1-10):</label>
+                    <input type="number" id="led-count" min="1" max="10" value="5" />
                 </div>
 
-                <div style="height: 60px; display: flex; align-items: flex-end;">
-                    <button class="btn-convert" id="play-arduino" disabled>Extract & Play</button>
-                </div>
+                <button class="btn-convert" id="generate-code">🔧 Generate Arduino Code</button>
+                <button class="btn-copy" id="copy-code">📋 Copy Code</button>
+                <button class="btn-download" id="download-code">⬇️ Download .ino</button>
 
-                <div class="loading" id="loading-arduino-play">
-                    <div class="spinner"></div>
-                    <p>Processing...</p>
-                </div>
-
-                <div class="status-message" id="status-arduino-play"></div>
-
-                <div class="player-container" id="arduino-player-container">
-                    <h4>🔊 Arduino Audio Playback</h4>
-                    <div class="audio-player">
-                        <audio id="arduino-audio-player" controls>
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                    <div class="player-info" id="arduino-player-info">
-                        <strong>Now Playing:</strong>
-                        <span id="arduino-now-playing">No file loaded</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Output Section -->
-        <div class="output-section">
-            <h3>📋 Preview & Player</h3>
-            <div class="tab-buttons">
-                <button onclick="showTab('preview-tab')">📄 Preview</button>
-                <button onclick="showTab('player-tab')">🎧 Player</button>
+                <div class="status-message" id="status-arduino"></div>
             </div>
 
-            <!-- Preview Tab -->
-            <div id="preview-tab" class="tab-content active">
-                <div style="margin-bottom: 15px;">
-                    <button onclick="showPreview('mp3-preview')" style="background: #667eea; color: white; padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer; margin-right: 10px;">MP3 → .txtaud Preview</button>
-                    <button onclick="showPreview('txtaud-preview')" style="background: #667eea; color: white; padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer;">Metadata Preview</button>
-                </div>
-                <div class="preview-box" id="mp3-preview">
-                    <p style="color: #999;">Convert an MP3 file to see the .txtaud preview here</p>
-                </div>
-                <div class="preview-box" id="txtaud-preview" style="display: none;">
-                    <p style="color: #999;">Upload a .txtaud file to see metadata here</p>
-                </div>
-            </div>
-
-            <!-- Player Tab -->
-            <div id="player-tab" class="tab-content">
-                <div class="player-container" id="player-container">
-                    <h4>🎧 Music Player</h4>
-                    <div class="audio-player">
-                        <audio id="audio-player" controls>
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                    <div class="player-info" id="player-info">
-                        <strong>Now Playing:</strong>
-                        <span id="now-playing">No file loaded</span>
+            <!-- Code Output -->
+            <div class="output-section">
+                <h3>📝 Generated Arduino Code</h3>
+                <div class="code-container">
+                    <button class="copy-icon" onclick="copyArduinoCode()">Copy</button>
+                    <div class="arduino-editor" id="code-output">
+<span class="comment">// Click "Generate Arduino Code" to create your music sketch</span>
                     </div>
                 </div>
-                <p style="color: #999; text-align: center; margin-top: 30px;" id="player-placeholder">
-                    Convert a .txtaud file to MP3 to see the player here
-                </p>
             </div>
         </div>
 
         <div class="info-box">
             <strong>ℹ️ What is MP3IFY?</strong>
-            <p>.txtaud is an innovative text-based audio format that encodes MP3 data into a human-readable JSON structure. With MP3IFY, you can convert MP3 files to .txtaud, play them back, and even generate Arduino sketches to play your music on microcontroller boards with LED effects!</p>
+            <p>.txtaud is an innovative text-based audio format that encodes MP3 data into a human-readable JSON structure. The Arduino Music feature converts melodies into Arduino sketches for MKR IoT Carrier with LEDs and buzzer support!</p>
         </div>
     </div>
 
     <script>
-        // File input handlers
+        // ==================== TAB SWITCHING ====================
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function showInnerTab(tabId) {
+            document.querySelectorAll('.tab-content-inner').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // ==================== FILE CONVERTERS ====================
         document.getElementById('mp3-file').addEventListener('change', function(e) {
             const file = e.target.files[0];
             const label = document.querySelector('label[for="mp3-file"]');
             const filename = document.getElementById('mp3-filename');
             const button = document.getElementById('convert-to-txtaud');
-            const arduinoButton = document.getElementById('convert-to-arduino-mp3');
             
             if (file) {
                 label.classList.add('has-file');
                 filename.textContent = `📄 ${file.name}`;
                 button.disabled = false;
-                arduinoButton.disabled = false;
             } else {
                 label.classList.remove('has-file');
                 filename.textContent = '';
                 button.disabled = true;
-                arduinoButton.disabled = true;
             }
         });
 
@@ -793,26 +816,6 @@
             const label = document.querySelector('label[for="txtaud-file"]');
             const filename = document.getElementById('txtaud-filename');
             const button = document.getElementById('convert-to-mp3');
-            const arduinoButton = document.getElementById('convert-to-arduino-txtaud');
-            
-            if (file) {
-                label.classList.add('has-file');
-                filename.textContent = `📄 ${file.name}`;
-                button.disabled = false;
-                arduinoButton.disabled = false;
-            } else {
-                label.classList.remove('has-file');
-                filename.textContent = '';
-                button.disabled = true;
-                arduinoButton.disabled = true;
-            }
-        });
-
-        document.getElementById('arduino-file').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const label = document.querySelector('label[for="arduino-file"]');
-            const filename = document.getElementById('arduino-filename');
-            const button = document.getElementById('play-arduino');
             
             if (file) {
                 label.classList.add('has-file');
@@ -868,8 +871,7 @@
                 
                 window.txtaudData = {
                     content: jsonString,
-                    filename: file.name.replace('.mp3', '.txtaud'),
-                    arrayBuffer: arrayBuffer
+                    filename: file.name.replace('.mp3', '.txtaud')
                 };
 
                 const preview = JSON.stringify(metadata, null, 2);
@@ -880,7 +882,7 @@
                 document.getElementById('converted-size').textContent = formatFileSize(jsonString.length);
 
                 const statusEl = document.getElementById('status-mp3');
-                statusEl.textContent = '✅ Conversion successful!';
+                statusEl.textContent = '✅ Conversion successful! Click download to save your .txtaud file.';
                 statusEl.className = 'status-message show success';
                 document.getElementById('download-txtaud').classList.add('show');
 
@@ -893,7 +895,6 @@
             }
         });
 
-        // Download TXTAUD
         document.getElementById('download-txtaud').addEventListener('click', function() {
             if (!window.txtaudData) return;
             const blob = new Blob([window.txtaudData.content], { type: 'application/json' });
@@ -957,11 +958,11 @@
                 document.getElementById('output-mp3-size').textContent = formatFileSize(audioBytes.length);
 
                 const statusEl = document.getElementById('status-txtaud');
-                statusEl.textContent = '✅ Conversion successful!';
+                statusEl.textContent = '✅ Conversion successful! Play or download your MP3 file.';
                 statusEl.className = 'status-message show success';
                 document.getElementById('download-mp3').classList.add('show');
 
-                setTimeout(() => showTab('player-tab'), 500);
+                setTimeout(() => showInnerTab('player-tab'), 500);
 
             } catch (error) {
                 const statusEl = document.getElementById('status-txtaud');
@@ -972,7 +973,6 @@
             }
         });
 
-        // Download MP3
         document.getElementById('download-mp3').addEventListener('click', function() {
             if (!window.mp3Data) return;
             const a = document.createElement('a');
@@ -981,326 +981,214 @@
             a.click();
         });
 
-        // Convert MP3 to Arduino
-        document.getElementById('convert-to-arduino-mp3').addEventListener('click', async function() {
-            const file = document.getElementById('mp3-file').files[0];
-            if (!file) return;
+        // ==================== ARDUINO CODE GENERATION ====================
+        const PRESETS = {
+            pirates: {
+                name: 'Pirates of the Caribbean Theme',
+                description: 'The iconic "He\'s a Pirate" melody with ocean wave LED animations',
+                notes: [294, 349, 440, 440, 0, 440, 494, 523, 523, 0, 523, 587, 494, 494, 0, 440, 392, 392, 440,
+                        294, 349, 440, 440, 0, 440, 494, 523, 523, 0, 523, 587, 494, 494, 0, 440, 392, 440,
+                        294, 349, 440, 440, 0, 440, 523, 587, 587, 0, 587, 659, 698, 698, 0, 659, 587, 659, 440,
+                        0, 440, 587, 659, 698, 0, 698, 784, 659, 659, 0, 587, 349, 392, 440],
+                durations: [150, 150, 300, 150, 50, 300, 150, 150, 150, 50, 300, 150, 150, 150, 50, 150, 150, 150, 300,
+                            150, 150, 300, 150, 50, 300, 150, 150, 150, 50, 300, 150, 150, 150, 50, 150, 150, 450,
+                            150, 150, 300, 150, 50, 300, 150, 150, 150, 50, 300, 150, 150, 150, 50, 150, 150, 150, 300,
+                            50, 150, 300, 150, 300, 50, 150, 150, 150, 150, 50, 150, 150, 150, 600]
+            },
+            mario: {
+                name: 'Super Mario Theme',
+                description: 'Classic Super Mario Bros theme music',
+                notes: [330, 330, 330, 262, 330, 392, 196, 262, 196, 0, 196, 294, 440, 0, 440, 440, 440, 349, 392, 0,
+                        330, 0, 262, 294, 247, 0, 330, 392, 494, 392, 330, 0, 330, 0, 262, 294, 247],
+                durations: [100, 100, 100, 100, 100, 150, 100, 100, 150, 100, 100, 100, 150, 100, 100, 100, 100, 100, 150, 100,
+                            150, 150, 100, 100, 150, 100, 100, 100, 100, 100, 150, 100, 150, 150, 100, 100, 150]
+            },
+            starwars: {
+                name: 'Star Wars Theme',
+                description: 'Epic Star Wars main theme',
+                notes: [392, 392, 392, 311, 466, 392, 311, 466, 392, 587, 0, 0, 587, 587, 587, 622, 466, 392, 311, 466, 392],
+                durations: [200, 200, 200, 150, 75, 200, 150, 75, 200, 300, 150, 150, 200, 200, 200, 150, 75, 200, 150, 75, 400]
+            },
+            twinkle: {
+                name: 'Twinkle Twinkle Little Star',
+                description: 'Classic lullaby melody',
+                notes: [262, 262, 392, 392, 440, 440, 392, 349, 349, 330, 330, 294, 294, 262, 0],
+                durations: [200, 200, 200, 200, 200, 200, 400, 200, 200, 200, 200, 200, 200, 600, 100]
+            }
+        };
 
-            document.getElementById('loading-arduino-mp3').classList.add('show');
-            document.getElementById('status-arduino-mp3').classList.remove('show');
+        function loadPreset(presetName) {
+            const preset = PRESETS[presetName];
+            if (!preset) return;
+
+            document.getElementById('song-name').value = preset.name;
+            document.getElementById('song-description').value = preset.description;
+            document.getElementById('notes-input').value = preset.notes.join(', ');
+            document.getElementById('durations-input').value = preset.durations.join(', ');
+
+            const statusEl = document.getElementById('status-arduino');
+            statusEl.textContent = `✅ Loaded preset: ${preset.name}`;
+            statusEl.className = 'status-message show success';
+        }
+
+        document.getElementById('generate-code').addEventListener('click', function() {
+            const songName = document.getElementById('song-name').value || 'My Song';
+            const description = document.getElementById('song-description').value || 'Amazing Arduino melody';
+            const notesStr = document.getElementById('notes-input').value;
+            const durationsStr = document.getElementById('durations-input').value;
+            const ledCount = parseInt(document.getElementById('led-count').value) || 5;
+
+            if (!notesStr.trim() || !durationsStr.trim()) {
+                const statusEl = document.getElementById('status-arduino');
+                statusEl.textContent = '❌ Please enter notes and durations';
+                statusEl.className = 'status-message show error';
+                return;
+            }
 
             try {
-                const arrayBuffer = await file.arrayBuffer();
-                const uint8Array = new Uint8Array(arrayBuffer);
-                
-                const tempo = document.getElementById('tempo-control').value;
-                const ledEffects = document.getElementById('led-effects').checked;
+                const notes = notesStr.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+                const durations = durationsStr.split(',').map(d => parseInt(d.trim())).filter(d => !isNaN(d));
 
-                // Analyze audio for frequency extraction (simplified)
-                const notes = extractNotesFromAudio(uint8Array);
-                const durations = generateDurations(notes, tempo);
+                if (notes.length !== durations.length) {
+                    throw new Error('Number of notes and durations must match');
+                }
 
-                const arduinoCode = generateArduinoSketch(
-                    notes,
-                    durations,
-                    file.name.replace('.mp3', ''),
-                    ledEffects,
-                    'mp3_to_music'
-                );
+                const code = generateArduinoCode(songName, description, notes, durations, ledCount);
+                displayCode(code);
 
-                window.arduinoData = {
-                    content: arduinoCode,
-                    filename: file.name.replace('.mp3', '.ino')
-                };
-
-                // Show preview
-                const previewCode = arduinoCode.substring(0, 800) + '\n\n... (code continues) ...';
-                document.getElementById('arduino-preview-mp3').innerHTML = `<pre>${escapeHtml(previewCode)}</pre>`;
-                document.getElementById('arduino-preview-mp3').style.display = 'block';
-
-                const statusEl = document.getElementById('status-arduino-mp3');
+                const statusEl = document.getElementById('status-arduino');
                 statusEl.textContent = '✅ Arduino code generated successfully!';
                 statusEl.className = 'status-message show success';
 
-            } catch (error) {
-                const statusEl = document.getElementById('status-arduino-mp3');
-                statusEl.textContent = `❌ Error: ${error.message}`;
-                statusEl.className = 'status-message show error';
-            } finally {
-                document.getElementById('loading-arduino-mp3').classList.remove('show');
-            }
-        });
-
-        // Download Arduino Code (MP3)
-        document.getElementById('download-arduino-mp3').addEventListener('click', function() {
-            if (!window.arduinoData) return;
-            const blob = new Blob([window.arduinoData.content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = window.arduinoData.filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        });
-
-        // Convert TXTAUD to Arduino
-        document.getElementById('convert-to-arduino-txtaud').addEventListener('click', async function() {
-            const file = document.getElementById('txtaud-file').files[0];
-            if (!file) return;
-
-            document.getElementById('loading-arduino-txtaud').classList.add('show');
-            document.getElementById('status-arduino-txtaud').classList.remove('show');
-
-            try {
-                const text = await file.text();
-                const txtaudData = JSON.parse(text);
-                
-                const synthType = document.getElementById('synth-type').value;
-                const strobeEffects = document.getElementById('strobe-effects').checked;
-
-                const notes = extractNotesFromTxtaud(txtaudData);
-                const durations = generateDurations(notes, 'normal');
-
-                const arduinoCode = generateArduinoSketch(
-                    notes,
-                    durations,
-                    txtaudData.header.original_filename.replace('.mp3', ''),
-                    strobeEffects,
-                    synthType
-                );
-
-                window.arduinoDataTxtaud = {
-                    content: arduinoCode,
-                    filename: 'converted_song.ino'
-                };
-
-                const previewCode = arduinoCode.substring(0, 800) + '\n\n... (code continues) ...';
-                document.getElementById('arduino-preview-txtaud').innerHTML = `<pre>${escapeHtml(previewCode)}</pre>`;
-                document.getElementById('arduino-preview-txtaud').style.display = 'block';
-
-                const statusEl = document.getElementById('status-arduino-txtaud');
-                statusEl.textContent = '✅ Arduino code generated successfully!';
-                statusEl.className = 'status-message show success';
+                document.getElementById('copy-code').classList.add('show');
+                document.getElementById('download-code').classList.add('show');
 
             } catch (error) {
-                const statusEl = document.getElementById('status-arduino-txtaud');
+                const statusEl = document.getElementById('status-arduino');
                 statusEl.textContent = `❌ Error: ${error.message}`;
                 statusEl.className = 'status-message show error';
-            } finally {
-                document.getElementById('loading-arduino-txtaud').classList.remove('show');
             }
         });
 
-        // Download Arduino Code (TXTAUD)
-        document.getElementById('download-arduino-txtaud').addEventListener('click', function() {
-            if (!window.arduinoDataTxtaud) return;
-            const blob = new Blob([window.arduinoDataTxtaud.content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = window.arduinoDataTxtaud.filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        });
+        function generateArduinoCode(songName, description, notes, durations, ledCount) {
+            const notesArray = notes.join(', ');
+            const durationsArray = durations.join(', ');
 
-        // Play Arduino
-        document.getElementById('play-arduino').addEventListener('click', async function() {
-            const file = document.getElementById('arduino-file').files[0];
-            if (!file) return;
-
-            document.getElementById('loading-arduino-play').classList.add('show');
-            document.getElementById('status-arduino-play').classList.remove('show');
-
-            try {
-                const arduinoCode = await file.text();
-                const notes = extractNotesFromArduino(arduinoCode);
-                const durations = extractDurationsFromArduino(arduinoCode);
-
-                const audioBuffer = synthesizeAudio(notes, durations);
-                const blob = new Blob([audioBuffer], { type: 'audio/wav' });
-                const audioUrl = URL.createObjectURL(blob);
-
-                const audioPlayer = document.getElementById('arduino-audio-player');
-                audioPlayer.src = audioUrl;
-
-                document.getElementById('arduino-now-playing').textContent = file.name;
-                document.getElementById('arduino-player-container').style.display = 'block';
-
-                const statusEl = document.getElementById('status-arduino-play');
-                statusEl.textContent = '✅ Arduino sketch extracted and synthesized!';
-                statusEl.className = 'status-message show success';
-
-            } catch (error) {
-                const statusEl = document.getElementById('status-arduino-play');
-                statusEl.textContent = `❌ Error: ${error.message}`;
-                statusEl.className = 'status-message show error';
-            } finally {
-                document.getElementById('loading-arduino-play').classList.remove('show');
+            const colorLines = [];
+            for (let i = 0; i < ledCount; i++) {
+                const intensity = 255 - (i * (255 / ledCount));
+                colorLines.push(`  colors[${i}] = carrier.leds.Color(${Math.round(intensity)}, ${Math.round(intensity)}, ${Math.round(intensity)});`);
             }
-        });
 
-        // Helper Functions
-        function extractNotesFromAudio(uint8Array) {
-            // Simplified note extraction - in real implementation, would use FFT
-            const notes = [];
-            const sampleRate = 44100;
-            const bytesPerSample = 2;
-            
-            for (let i = 0; i < Math.min(uint8Array.length, 44100 * 5); i += 2205) {
-                const freq = 440 + Math.random() * 200; // Random freq for demo
-                notes.push(Math.round(freq));
-            }
-            return notes;
-        }
+            return `<span class="comment">/*
+  ${songName} - ${description}
+  - Uses buzzer to play the melody
+  - ${ledCount} RGB LEDs show a sweeping white wave pattern
+*/</span>
 
-        function extractNotesFromTxtaud(txtaudData) {
-            // Extract frequency information from txtaud metadata if available
-            const notes = [];
-            const chunks = txtaudData.audio_chunks;
-            
-            for (let i = 0; i < Math.min(chunks.length, 100); i++) {
-                const freq = 349 + (i % 12) * 55; // C major scale
-                notes.push(freq);
-            }
-            return notes;
-        }
-
-        function extractNotesFromArduino(code) {
-            const notes = [];
-            const notePattern = /(\d+)\s*,\s*\/\/\s*Hz|Buzzer\.beep\((\d+)/g;
-            let match;
-            
-            while ((match = notePattern.exec(code)) !== null) {
-                const freq = parseInt(match[1] || match[2]);
-                if (freq > 0) notes.push(freq);
-            }
-            
-            return notes.length > 0 ? notes : [440, 494, 523, 587, 659, 740, 831];
-        }
-
-        function extractDurationsFromArduino(code) {
-            const durations = [];
-            const durationPattern = /,\s*(\d+)\s*\);/g;
-            let match;
-            
-            while ((match = durationPattern.exec(code)) !== null) {
-                durations.push(parseInt(match[1]));
-            }
-            
-            return durations.length > 0 ? durations : new Array(7).fill(200);
-        }
-
-        function generateDurations(notes, tempo) {
-            const tempoMap = {
-                'slow': 1.5,
-                'normal': 1,
-                'fast': 0.7
-            };
-            
-            const factor = tempoMap[tempo] || 1;
-            return notes.map(() => Math.round(200 * factor));
-        }
-
-        function generateArduinoSketch(notes, durations, songName, ledEffects, type) {
-            const ledSetup = ledEffects ? `
-  // LED Animation Setup
-  uint32_t colors[5];
-  colors[0] = carrier.leds.Color(255, 255, 255); // White
-  colors[1] = carrier.leds.Color(100, 100, 255); // Light Blue
-  colors[2] = carrier.leds.Color(255, 100, 100); // Light Red
-  colors[3] = carrier.leds.Color(100, 255, 100); // Light Green
-  colors[4] = carrier.leds.Color(0, 0, 0); // Off
-` : '';
-
-            const ledAnimation = ledEffects ? `
-    // Cycle LED colors
-    carrier.leds.clear();
-    for (int led = 0; led < 5; led++) {
-      int colorIndex = (i + led) % 5;
-      carrier.leds.setPixelColor(led, colors[colorIndex]);
-    }
-    carrier.leds.show();
-` : '';
-
-            const notesArray = notes.slice(0, 50).join(', ');
-            const durationsArray = durations.slice(0, 50).join(', ');
-
-            return `/*
-  MP3IFY Arduino Sketch
-  Generated from: ${songName}
-  Type: ${type}
-  LED Effects: ${ledEffects ? 'Enabled' : 'Disabled'}
-  
-  This sketch plays music using the MKRIoTCarrier buzzer
-  and controls RGB LEDs for visual effects.
-*/
-
-#include <Arduino_MKRIoTCarrier.h>
+<span class="keyword">#include</span> &lt;Arduino_MKRIoTCarrier.h&gt;
 
 MKRIoTCarrier carrier;
 
-void setup() {
+<span class="comment">// --- White Brightness Levels ---</span>
+uint32_t colors[${ledCount}];
+<span class="keyword">const int</span> numColors = ${ledCount};
+
+<span class="comment">// LED animation state</span>
+<span class="keyword">int</span> currentPixel = 0;
+<span class="keyword">bool</span> movingRight = <span class="keyword">true</span>;
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
   carrier.begin();
   Serial.begin(9600);
-${ledSetup}
-  
-  // Music notes (in Hz)
-  int notes[] = {${notesArray}};
-  
-  // Note durations (in milliseconds)
-  int durations[] = {${durationsArray}};
-  
-  int numNotes = sizeof(notes) / sizeof(notes[0]);
-  
-  // Play the song
-  for (int i = 0; i < numNotes; i++) {
-${ledAnimation}
-    
-    // Play note
-    if (notes[i] > 0) {
-      carrier.Buzzer.beep(notes[i], durations[i]);
-    } else {
-      delay(durations[i]);
+
+  <span class="comment">// Initialize white colors with smooth gradient for wave transitions</span>
+${colorLines.join('\n')}
+
+  <span class="comment">// --- Song Notes (in Hz) ---</span>
+  <span class="keyword">int</span> notes[] = {${notesArray}};
+
+  <span class="comment">// --- Note Durations (in milliseconds) ---</span>
+  <span class="keyword">int</span> durations[] = {${durationsArray}};
+
+  <span class="keyword">int</span> numNotes = <span class="keyword">sizeof</span>(notes) / <span class="keyword">sizeof</span>(notes[0]);
+
+  <span class="comment">// --- Play song with rolling wave LED effects ---</span>
+  <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; numNotes; i++) {
+
+    <span class="comment">// Update LEDs to display a rolling wave frame</span>
+    carrier.leds.clear();
+    <span class="keyword">for</span> (<span class="keyword">int</span> led = 0; led &lt; ${ledCount}; led++) {
+      <span class="keyword">int</span> colorIndex = (currentPixel + led) % numColors;
+      carrier.leds.setPixelColor(led, colors[colorIndex]);
     }
-    
-    delay(50); // Small gap between notes
+    carrier.leds.show();
+
+    <span class="comment">// Play note or rest</span>
+    <span class="keyword">if</span> (notes[i] &gt; 0) {
+      carrier.Buzzer.beep(notes[i], durations[i]);
+    } <span class="keyword">else</span> {
+      <span class="keyword">delay</span>(durations[i]);
+    }
+
+    <span class="comment">// Move the bright wave peak back and forth smoothly</span>
+    <span class="keyword">if</span> (movingRight) {
+      currentPixel++;
+      <span class="keyword">if</span> (currentPixel &gt;= numColors - 1) {
+        currentPixel = numColors - 2;
+        movingRight = <span class="keyword">false</span>;
+      }
+    } <span class="keyword">else</span> {
+      currentPixel--;
+      <span class="keyword">if</span> (currentPixel &lt;= 0) {
+        currentPixel = 1;
+        movingRight = <span class="keyword">true</span>;
+      }
+    }
   }
-  
-  // Cleanup
-  carrier.Buzzer.noSound();
+
+  <span class="comment">// After finishing, turn everything off</span>
   carrier.leds.clear();
   carrier.leds.show();
+  carrier.Buzzer.noSound();
 }
 
-void loop() {
-  // Main loop - can add additional features here
-  delay(1000);
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+  <span class="comment">// Runs once in setup(). Reset the board to set sail again!</span>
 }`;
         }
 
-        function synthesizeAudio(notes, durations) {
-            const sampleRate = 44100;
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const totalSamples = sampleRate * 2; // 2 seconds
-            const audioBuffer = audioContext.createAudioBuffer(1, totalSamples, sampleRate);
-            const data = audioBuffer.getChannelData(0);
-
-            let sampleIndex = 0;
-            for (let i = 0; i < Math.min(notes.length, 50); i++) {
-                const freq = notes[i];
-                const duration = (durations[i] || 200) / 1000;
-                const samples = Math.round(duration * sampleRate);
-
-                for (let s = 0; s < samples && sampleIndex < totalSamples; s++) {
-                    const t = (sampleIndex / sampleRate);
-                    data[sampleIndex] = Math.sin(2 * Math.PI * freq * t) * 0.3;
-                    sampleIndex++;
-                }
-            }
-
-            return audioBuffer;
+        function displayCode(code) {
+            document.getElementById('code-output').innerHTML = code;
+            window.generatedCode = code.replace(/<[^>]*>/g, ''); // Remove HTML tags for copying
         }
 
+        document.getElementById('copy-code').addEventListener('click', copyArduinoCode);
+
+        function copyArduinoCode() {
+            if (!window.generatedCode) return;
+            navigator.clipboard.writeText(window.generatedCode).then(() => {
+                const btn = document.getElementById('copy-code');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        document.getElementById('download-code').addEventListener('click', function() {
+            if (!window.generatedCode) return;
+            const blob = new Blob([window.generatedCode], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${document.getElementById('song-name').value || 'song'}.ino`;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        // ==================== UTILITY FUNCTIONS ====================
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
@@ -1323,13 +1211,6 @@ void loop() {
         function showPreview(previewId) {
             document.getElementById('mp3-preview').style.display = previewId === 'mp3-preview' ? 'block' : 'none';
             document.getElementById('txtaud-preview').style.display = previewId === 'txtaud-preview' ? 'block' : 'none';
-        }
-
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
         }
     </script>
 </body>
